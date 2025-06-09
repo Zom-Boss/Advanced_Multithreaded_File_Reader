@@ -20,7 +20,7 @@
             bool changed;
             streampos start;
             streampos end;
-            size_t hash;
+            int hash;
 
             ChunkData() : buffer(), changed(false), start(0), end(0), hash(0) {}
 
@@ -52,7 +52,7 @@
         thread log_thread;
 
         // Used for comparing and checking whether the previous and current contents of a chunk are same or not
-        size_t fast_hash(vector<char> &buffer)
+        int fast_hash(vector<char> &buffer)
         {
             return hash<string_view>{}(string_view(buffer.data(), buffer.size()));
         }
@@ -81,19 +81,19 @@
                         if (chunk_changed[log.first])
                         {
                             // Find the index where buffers start to differ
-                            size_t diff_index = 0;
+                            int di_ind = 0;
                             const vector<char> &old_buffer = log.second.first;
                             const vector<char> &new_buffer = log.second.second;
-                            size_t min_size = min(old_buffer.size(), new_buffer.size());
+                            int min_size = min(old_buffer.size(), new_buffer.size());
 
-                            while (diff_index < min_size && old_buffer[diff_index] == new_buffer[diff_index])
+                            while (di_ind < min_size && old_buffer[di_ind] == new_buffer[di_ind])
                             {
-                                diff_index++;
+                                di_ind++;
                             }
 
                             // If we reached the end of one buffer but not the other,
                             // the difference is in length (one buffer has additional content)
-                            bool length_difference = (diff_index == min_size && old_buffer.size() != new_buffer.size());
+                            bool length_difference = (di_ind == min_size && old_buffer.size() != new_buffer.size());
 
                             if (!changes_detected)
                             {
@@ -102,7 +102,7 @@
                             }
 
                             cout << "For thread " << log.first + 1 << " -> " << endl;
-                            cout << "Difference starts at position " << diff_index << endl;
+                            cout << "Difference starts at position " << di_ind << endl;
 
                             // If buffers are identical but different lengths
                             if (length_difference)
@@ -118,12 +118,12 @@
                             }
 
                             // Displaying a bit of context before the difference (up to 10 chars)
-                            size_t context_start = (diff_index > 10) ? diff_index - 10 : 0;
+                            int context_start = (di_ind > 10) ? di_ind - 10 : 0;
 
-                            if (context_start < diff_index)
+                            if (context_start < di_ind)
                             {
                                 cout << "Context: \"";
-                                for (size_t i = context_start; i < diff_index; i++)
+                                for (int i = context_start; i < di_ind; i++)
                                 {
                                     cout << old_buffer[i];
                                 }
@@ -132,12 +132,12 @@
 
                             cout << "Old content : ";
                             // Printing old content from the difference point
-                            for (size_t i = diff_index; i < old_buffer.size(); i++)
+                            for (int i = di_ind; i < old_buffer.size(); i++)
                             {
                                 char ch = old_buffer[i];
                                 if (ch == '\n')
                                 {
-                                    cout << ch << "              ";
+                                    cout << ch << "           ";
                                 }
                                 else
                                 {
@@ -148,7 +148,7 @@
 
                             cout << "New content : ";
                             // Printing new content from the difference point
-                            for (size_t i = diff_index; i < new_buffer.size(); i++)
+                            for (int i = di_ind; i < new_buffer.size(); i++)
                             {
                                 char ch = new_buffer[i];
                                 if (ch == '\n')
@@ -285,7 +285,7 @@
                 vector<char> new_buffer(chunk_size);
                 if (file.read(new_buffer.data(), chunk_size))
                 {
-                    size_t new_hash = fast_hash(new_buffer);
+                    int new_hash = fast_hash(new_buffer);
 
                     // Check if content has changed
                     {

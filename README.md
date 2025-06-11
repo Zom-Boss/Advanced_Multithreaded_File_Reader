@@ -53,6 +53,35 @@ The following outlines the control flow of the project:
    - a. Chunk boundaries are updated if the file size has changed.  
    - b. Only the affected chunks are re-read by the corresponding worker threads.  
    - c. All changes are logged and reported for visibility and debugging.
+   
+## 📊 Performance Analysis
+
+### 5.1 Single-Threaded vs. Multi-Threaded Performance
+
+The project includes both single-threaded (`single_thread.cpp`) and multi-threaded (`multiple_thread.cpp`) implementations to evaluate and compare file reading performance. Benchmark tests were conducted on files of varying sizes to analyze efficiency.
+
+---
+
+### 5.1.1 Performance Graphs
+
+The following graphs illustrate the performance comparison:
+
+![alt text](image.png)
+
+- **Figure 4**: *Reading Time vs. File Size* — Single Thread vs. Multi Thread  
+
+![alt text](image-1.png)
+
+- **Figure 5**: *Speedup vs. File Size* — Single Thread vs. Multi Thread
+
+#### 📝 Observations:
+
+- 📈 **Figure 4** shows that reading time increases linearly with file size for both implementations. However, the rate of increase is significantly higher in the single-threaded reader compared to the multi-threaded one.
+
+- 🚀 **Figure 5** demonstrates that the multi-threaded implementation achieves a speedup ranging from approximately **3.6× to 4.4×**, depending on the file size.
+
+- ✅ Overall, the **multi-threaded approach consistently outperforms** the single-threaded version, with increasing advantages as file size grows. This highlights the substantial performance improvement gained through parallel processing.
+
 
 
 

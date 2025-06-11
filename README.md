@@ -29,4 +29,30 @@ The primary goals of this project are:
 - **`single_thread.cpp`**  
   This file implements the single-threaded approach for reading files. It is used to compare performance against the multi-threaded method.
 
+  ## 🔄 Control Flow
+
+The following outlines the control flow of the project:
+
+1. **Directory Monitoring**  
+   The `DirectoryMonitor` starts and begins watching the specified directory for text files.
+
+2. **File Detection and Monitoring**  
+   When a `.txt` file is detected, an instance of `FileChangeMonitor` is created for that file.
+
+3. **File Chunking**  
+   The file is divided into multiple chunks for parallel processing.
+
+4. **Thread Assignment**  
+   Worker threads are assigned to read and process individual chunks of the file.
+
+5. **Real-time Monitoring**  
+   A dedicated monitor thread continuously checks for modifications in the file.
+
+6. **Handling Modifications**  
+   When changes are detected:
+   - a. Chunk boundaries are updated if the file size has changed.  
+   - b. Only the affected chunks are re-read by the corresponding worker threads.  
+   - c. All changes are logged and reported for visibility and debugging.
+
+
 

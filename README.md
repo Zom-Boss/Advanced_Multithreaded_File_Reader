@@ -15,14 +15,18 @@ The primary goals of this project are:
 - ⚙️ **Performance Benchmarking**:  
   To evaluate and compare the performance of the multi-threaded approach against a traditional single-threaded file reading approach.
 
+## 📁 File Descriptions
 
-<br>
-The "file_monitor.hpp" is used for reading a file and also notifying whenever the data inside a file is changed in real time . It also tells which thread chunks changed during a modification.
-<br>
-The "directory_monitor.cpp" is used for monitoring the directory. It instantiates a new instance of "FileChangeMonitor" class for each text file already present in the present directory. It also keeps monitoring the directory and whenever a new text file is introduced in the directory, another new instance of the class would be created.
-<br>
-The "multiple_thread.cpp" and "single_thread.cpp" in the code are here for speed comparisons between the two ways of file reading.
-<br>
-In the "multiple_thread.cpp" , only the calculation of hash and monitoring activities are removed form the "file_monitor.hpp" as we are just comparing the speed of reading
-<br>
+- **`file_monitor.hpp`**  
+  This header file is responsible for reading a file and detecting real-time changes in its content. It identifies and notifies which specific thread-handled chunks of the file have been modified.
+
+- **`directory_monitor.cpp`**  
+  This source file monitors the current directory for text files. It creates a new instance of the `FileChangeMonitor` class for each `.txt` file present. Additionally, it continuously observes the directory, and whenever a new text file is added, a corresponding new monitor instance is created automatically.
+
+- **`multiple_thread.cpp`**  
+  This file demonstrates multi-threaded file reading. It is used for performance benchmarking and comparison. In this version, hash calculation and real-time monitoring functionalities (originally from `file_monitor.hpp`) are removed to strictly focus on read speed.
+
+- **`single_thread.cpp`**  
+  This file implements the single-threaded approach for reading files. It is used to compare performance against the multi-threaded method.
+
 

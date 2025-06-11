@@ -1,4 +1,21 @@
 # Advanced_Multithreaded_File_Reader
+## 📌 Project Goals
+
+The primary goals of this project are:
+
+- ✅ **Efficient Multi-threaded File Reading**:  
+  To develop a multi-threaded file reader capable of handling large files by dividing the data into chunks and processing them in parallel.
+
+- 💡 **Optimized I/O with Buffered Reading**:  
+  To implement a buffered reading mechanism that minimizes I/O overhead and improves performance.
+
+- 🔄 **Real-time File Modification Detection**:  
+  To design a robust detection mechanism that monitors real-time file modifications without interrupting or corrupting the ongoing reading process.
+
+- ⚙️ **Performance Benchmarking**:  
+  To evaluate and compare the performance of the multi-threaded approach against a traditional single-threaded file reading approach.
+
+
 <br>
 The "file_monitor.hpp" is used for reading a file and also notifying whenever the data inside a file is changed in real time . It also tells which thread chunks changed during a modification.
 <br>
